@@ -69,7 +69,9 @@ extern NSString *urlEncode(id object) {
     if ( _request ) {
         _receivedData = [[NSMutableData alloc] init];
     } else {
-        _errorBlock(nil);
+        if ( _errorBlock ) {
+            _errorBlock(nil);
+        }
     }
 }
 
@@ -77,6 +79,9 @@ extern NSString *urlEncode(id object) {
     if ( !_completed && _request ) {
         [_request cancel];
         _completed = YES;
+        if ( _successBlock ) {
+            _successBlock(nil);
+        }
     }
     [self cleanup];
 }

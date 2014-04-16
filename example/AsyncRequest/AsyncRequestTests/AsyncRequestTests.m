@@ -11,7 +11,6 @@
 
 static NSString *kWrongURL  = @"http:/wwwerror.url/problem";
 static NSString *kRightURL  = @"http://brunocapezzali.com/examples/capezzbrTweetsAPI.php";
-static NSString *kBigFile   = @"https://central.github.com/mac/latest";
 
 // Set the flag for a block completion handler
 #define StartBlock() __block BOOL waitingForBlock = YES
@@ -29,6 +28,10 @@ do { \
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; \
     } \
 } while(0)
+
+// Macro defined for creating a small delay
+#define WaitFor(seconds) \
+    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:seconds]]
 
 
 @interface AsyncRequestTests : XCTestCase
@@ -51,20 +54,72 @@ do { \
 
 - (void)testWrongURL {
     StartBlock();
-    
     AsyncRequest *request =
     [AsyncRequest requestWithURL:kWrongURL
                           params:nil
                        onSuccess:^(NSData *data) {
-                           XCTAssert(NO, @"This must return error");
+                           XCTAssert(NO, @"onSuccess called with wrong URL");
                            EndBlock();
                        } onErrror:^(NSError *error) {
-                           XCTAssertNotNil(error, @"Error not occurred with wrong URL");
+                           XCTAssertNotNil(error, @"onError called with empty error parameter");
                            EndBlock();
                        }];
     [request setTimeoutInterval:4]; // seconds
     [request start];
-    
+    WaitUntilBlockCompletes();
+}
+
+- (void)testRightURL {
+    StartBlock();
+    AsyncRequest *request =
+    [AsyncRequest requestWithURL:kRightURL
+                          params:nil
+                       onSuccess:^(NSData *data) {
+                           XCTAssert([data length] > 0, @"No data returned in onSuccess callback");
+                           EndBlock();
+                       } onErrror:^(NSError *error) {
+                           XCTAssert(NO, @"onErrror called with right URL");
+                           EndBlock();
+                       }];
+    [request setTimeoutInterval:4]; // seconds
+    [request start];
+    WaitUntilBlockCompletes();
+}
+
+- (void)testTimeout {
+    StartBlock();
+    AsyncRequest *request =
+    [AsyncRequest requestWithURL:kRightURL
+                          params:nil
+                       onSuccess:^(NSData *data) {
+                           XCTAssert(NO, @"onSuccess called but instead had to call onError");
+                           EndBlock();
+                       } onErrror:^(NSError *error) {
+                           XCTAssertNotNil(error, @"onError called with empty error parameter");
+                           XCTAssertEqual(error.code, kCFURLErrorTimedOut, @"Error isn't timeout");
+                           EndBlock();
+                       }];
+    [request setTimeoutInterval:0.5f]; // seconds
+    [request start];
+    WaitUntilBlockCompletes();
+}
+
+- (void)testCancelRequest {
+    StartBlock();
+    AsyncRequest *request =
+    [AsyncRequest requestWithURL:kRightURL
+                          params:nil
+                       onSuccess:^(NSData *data) {
+                           XCTAssertNil(data, @"data is not nil when request was cancelled");
+                           EndBlock();
+                       } onErrror:^(NSError *error) {
+                           XCTAssert(NO, @"onErrror called when request was cancelled");
+                           EndBlock();
+                       }];
+    [request setTimeoutInterval:4]; // seconds
+    [request start];
+    WaitFor(0.5f);
+    [request cancel]; // force a request cancel after half second
     WaitUntilBlockCompletes();
 }
 
