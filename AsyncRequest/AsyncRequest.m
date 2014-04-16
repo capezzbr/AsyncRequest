@@ -1,9 +1,7 @@
 //
 //  AsynchronousRequest.m
-//  CallCenterMobile
 //
 //  Created by Bruno Capezzali on 06/05/13.
-//
 //
 
 #import "AsyncRequest.h"
@@ -11,16 +9,13 @@
 // helper function: get the url encoded string form of any object
 extern NSString *urlEncode(id object) {
     NSString *string = [NSString stringWithFormat:@"%@", object];
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                                 CFSTR("!*'\"();:@&=+$,/?%#[]% "), kCFStringEncodingUTF8));
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL, CFSTR("!*'\"();:@&=+$,/?%#[]% "), kCFStringEncodingUTF8));
 }
 
 @implementation AsyncRequest
 
-@synthesize timeoutInterval = _timeoutInterval;
-@synthesize completed = _completed;
-
 + (NSString *)encodedURL:(NSString *)page withParams:(NSDictionary *)params {
+    
     if ( params && [params count] > 0 ) {
         // Generate the GET request with all the parameters
         NSMutableArray *parts = [NSMutableArray array];
@@ -48,28 +43,26 @@ extern NSString *urlEncode(id object) {
                onErrror:(void (^)(NSError *error))error {
     
     if ( (self = [super init]) ) {
-        
         _successBlock = [success copy];
         _errorBlock = [error copy];
         _timeoutInterval = 0; // no timeout
         _requestURL = [AsyncRequest encodedURL:page withParams:params];
         _completed = NO;
+//        NSLog(@"Request GET:\n%@", _requestURL);
     }
-    
     return self;
 }
 
 - (void)start {
+    
     // Create the GET request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:_requestURL]];
     [request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
     [request setHTTPMethod:@"GET"];
-//    NSLog(@"Request GET:\n%@", _requestURL);
     
-    // If we need to have a timeout then set it to the request
+    // If we have a timeout then set it to the request
     if ( _timeoutInterval > 0 ) {
         [request setTimeoutInterval:_timeoutInterval];
-//        NSLog(@"timeout: %f", request.timeoutInterval);
     }
     
     _request = [NSURLConnection connectionWithRequest:request delegate:self];
@@ -85,6 +78,7 @@ extern NSString *urlEncode(id object) {
         [_request cancel];
         _completed = YES;
     }
+    [self cleanup];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -102,7 +96,7 @@ extern NSString *urlEncode(id object) {
     if ( _errorBlock ) {
         _errorBlock(error);
     }
-    _receivedData = nil;
+    [self cleanup];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -110,13 +104,18 @@ extern NSString *urlEncode(id object) {
     if ( _successBlock ) {
         _successBlock(_receivedData);
     }
-    _receivedData = nil;
+    [self cleanup];
 }
 
-- (void)dealloc {
+- (void)cleanup {
+    _receivedData = nil;
     _requestURL = nil;
     _errorBlock = nil;
     _successBlock = nil;
+}
+
+- (void)dealloc {
+    NSLog(@"deallocated");
 }
 
 @end
