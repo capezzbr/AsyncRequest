@@ -8,9 +8,10 @@ Usage
 ```objective-c
 AsyncRequest *request =
 [AsyncRequest requestWithURL:@"http://site/script"
-                      params:@{@"integerParameter": [NSNumber numberWithInt:20], @"stringParameter": @"empty"}
+                      params:@{@"integerParameter": [NSNumber numberWithInt:20], 
+                               @"stringParameter": @"empty"}
                    onSuccess:^(NSData *data) {
-                       /* execute data */
+                       /* use data */
                   } onErrror:^(NSError *error) {
                        /* manage error */
                   }];
@@ -20,6 +21,7 @@ AsyncRequest *request =
 
 Result
 ---------
+I've made a small project for showing the potential of **AsyncRequest**. In this project I retrieve the last tweets from my account ([@capezzbr](https://twitter.com/capezzbr)) calling a remote script that use the Twitter API 1.1
 ![ScreenShot](screen.PNG)
 
 How To Get Started 
