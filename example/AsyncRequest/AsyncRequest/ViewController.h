@@ -10,6 +10,12 @@
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     __strong UIView *_loadingView;
+    
+    enum {
+        kCustomCellTagName      = 1,
+        kCustomCellTagTimestamp = 2,
+        kCustomCellTagStatus    = 3
+    };
 }
 
 @property (nonatomic, strong) NSArray *tweets;

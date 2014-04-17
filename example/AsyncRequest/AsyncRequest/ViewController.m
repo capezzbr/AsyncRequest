@@ -10,10 +10,6 @@
 #import "AsyncRequest.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define kCustomCellNameField        (1)
-#define kCustomCellTimestampField   (2)
-#define kCustomCellStatusField      (3)
-
 @interface ViewController ()
 
 @end
@@ -29,7 +25,8 @@
     [self loadTweets];
 }
 
-#pragma mark -- Core functions
+#pragma mark -
+#pragma mark Core functions
 
 - (void)loadTweets {
     [self showLoadingView];
@@ -43,7 +40,7 @@
                            [self hideLoadingView];
                            [self showErrorDialog:error.localizedDescription withTitle:@"Error"];
                        }];
-    [request setTimeoutInterval:4]; // seconds
+    [request setTimeoutInterval:8]; // seconds
     [request start];
 }
 
@@ -55,7 +52,8 @@
     }
 }
 
-#pragma mark -- UITableView's Stuffs
+#pragma mark -
+#pragma mark UITableView's Stuffs
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.tweets count];
@@ -70,20 +68,20 @@
     }
     
     NSDictionary *tweet = [self.tweets objectAtIndex:indexPath.row];
-    UILabel *nameLabel = (UILabel *)[cell viewWithTag:kCustomCellNameField];
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:kCustomCellTagName];
     nameLabel.text = [@"@" stringByAppendingString:[tweet objectForKey:@"username"]];
     
-    UILabel *timeLabel = (UILabel *)[cell viewWithTag:kCustomCellTimestampField];
+    UILabel *timeLabel = (UILabel *)[cell viewWithTag:kCustomCellTagTimestamp];
     timeLabel.text = [tweet objectForKey:@"time"];
     
-    UILabel *statusLabel = (UILabel *)[cell viewWithTag:kCustomCellStatusField];
+    UILabel *statusLabel = (UILabel *)[cell viewWithTag:kCustomCellTagStatus];
     statusLabel.text = [tweet objectForKey:@"status"];
-    statusLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }
 
-#pragma mark -- Some GUI's Stuffs
+#pragma mark -
+#pragma mark Some GUI's Stuffs
 
 - (CGSize)screenSize {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -106,7 +104,7 @@
     UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake((winSize.width-side)*0.5f,
                                                                  (winSize.height-side)*0.5f, side, side)];
     [blackView setBackgroundColor:[UIColor darkGrayColor]];
-    [blackView setAlpha:0.9f];
+    [blackView setAlpha:0.8f];
     [[blackView layer] setCornerRadius:12];
     [[blackView layer] setMasksToBounds:YES];
     return blackView;

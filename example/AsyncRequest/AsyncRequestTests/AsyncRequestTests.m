@@ -67,6 +67,7 @@ do { \
     [request setTimeoutInterval:4]; // seconds
     [request start];
     WaitUntilBlockCompletes();
+    WaitFor(1); // else the tests end before the object dealloc
 }
 
 - (void)testRightURL {

@@ -120,8 +120,4 @@ extern NSString *urlEncode(id object) {
     _requestURL = nil;
 }
 
-- (void)dealloc {
-    NSLog(@"deallocated");
-}
-
 @end
