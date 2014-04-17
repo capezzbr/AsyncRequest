@@ -1,7 +1,7 @@
 AsyncRequest
 ============
 
-Wrapper of NSURLConnection that helps the developer to create an asynchronous request for retrieving data from a script with few line of code.
+Wrapper of NSURLConnection that helps the developer to create an asynchronous request for retrieving data with few line of code.
 
 Usage
 ---------
@@ -21,7 +21,8 @@ AsyncRequest *request =
 
 Result
 ---------
-I've made a small project for showing the potential of **AsyncRequest**. In this project I retrieve the last tweets from my account ([@capezzbr](https://twitter.com/capezzbr)) calling a remote script that use the Twitter API 1.1
+I've made a small project for showing the potential of **AsyncRequest**. In this project I retrieve the latest tweets from my account ([@capezzbr](https://twitter.com/capezzbr)) calling a remote script that use the [Twitter REST API v1.1](https://dev.twitter.com/docs/api/1.1).
+
 ![ScreenShot](screen.PNG)
 
 How To Get Started 
