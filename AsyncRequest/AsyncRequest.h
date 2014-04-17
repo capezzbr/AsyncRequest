@@ -10,7 +10,7 @@ extern NSString *urlEncode(id object);
     
 @interface AsyncRequest : NSObject {
     NSString *_requestURL;
-    NSURLConnection *_request;    
+    NSURLConnection *_request;
     NSMutableData *_receivedData;
     
     // callbacks

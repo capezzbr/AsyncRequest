@@ -113,10 +113,11 @@ extern NSString *urlEncode(id object) {
 }
 
 - (void)cleanup {
-    _receivedData = nil;
-    _requestURL = nil;
     _errorBlock = nil;
     _successBlock = nil;
+    _request = nil;
+    _receivedData = nil;
+    _requestURL = nil;
 }
 
 - (void)dealloc {

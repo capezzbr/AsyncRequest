@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    __strong UIView *_loadingView;
+}
 
+@property (nonatomic, strong) NSArray *tweets;
 @property (nonatomic, weak) IBOutlet UITableView *resultTable;
 
 @end

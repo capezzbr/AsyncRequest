@@ -25,6 +25,7 @@
 		571CD49018FDDFE500828146 /* AsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD48E18FDDFE500828146 /* AsyncRequest.m */; };
 		571CD49218FDE29E00828146 /* twitter-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 571CD49118FDE29E00828146 /* twitter-icon.png */; };
 		571CD49318FDE29E00828146 /* twitter-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 571CD49118FDE29E00828146 /* twitter-icon.png */; };
+		579EDA7618FF15FA00A18CF4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 579EDA7518FF15FA00A18CF4 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		571CD48D18FDDFE500828146 /* AsyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncRequest.h; sourceTree = "<group>"; };
 		571CD48E18FDDFE500828146 /* AsyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncRequest.m; sourceTree = "<group>"; };
 		571CD49118FDE29E00828146 /* twitter-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-icon.png"; sourceTree = SOURCE_ROOT; };
+		579EDA7518FF15FA00A18CF4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579EDA7618FF15FA00A18CF4 /* QuartzCore.framework in Frameworks */,
 				571CD45518FDDF8500828146 /* CoreGraphics.framework in Frameworks */,
 				571CD45718FDDF8500828146 /* UIKit.framework in Frameworks */,
 				571CD45318FDDF8500828146 /* Foundation.framework in Frameworks */,
@@ -108,6 +111,7 @@
 		571CD45118FDDF8500828146 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				579EDA7518FF15FA00A18CF4 /* QuartzCore.framework */,
 				571CD45218FDDF8500828146 /* Foundation.framework */,
 				571CD45418FDDF8500828146 /* CoreGraphics.framework */,
 				571CD45618FDDF8500828146 /* UIKit.framework */,
@@ -479,6 +483,7 @@
 				571CD48318FDDF8600828146 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		571CD48418FDDF8600828146 /* Build configuration list for PBXNativeTarget "AsyncRequestTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +492,7 @@
 				571CD48618FDDF8600828146 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
