@@ -37,3 +37,5 @@ Some **unit tests** are available [here](/example/AsyncRequest/AsyncRequestTests
 License 
 ---------
 AsyncRequest is available under the MIT license. See the LICENSE file for more info.
+
+**Follow me on twitter [@capezzbr](http://www.twitter.com/capezzbr)**
